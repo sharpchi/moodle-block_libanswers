@@ -54,6 +54,10 @@ class block_libanswers extends block_base {
             return $this->content;
         }
 
+        if (!isset($this->config->widgets)) {
+            return $this->content;
+        }
+
         $this->content = new stdClass();
         $this->content->text = '';
 
@@ -70,10 +74,16 @@ class block_libanswers extends block_base {
         }
 
         if ($now < $end || $now > $start) {
+            $widget = explode('_', $this->config->widgets);
+            if (count($widget) !== 2) {
+                return $this->content;
+            }
+            $region = $widget[0];
+            $hash = $widget[1];
             $this->content->text .=    '
             <div class="libchat-container">
-                <div id="libchat_' . $this->config->widgets . '"></div>
-                <script src="https://region-eu.libanswers.com/load_chat.php?hash=' . $this->config->widgets . '"></script>
+                <div id="libchat_' . $hash . '"></div>
+                <script src="https://' . $region . '.libanswers.com/load_chat.php?hash=' . $hash . '"></script>
             </div>';
 
         } else {

@@ -54,7 +54,7 @@ function widgetoptions() : array {
     
     $response = json_decode($json);
     $widgets = $response->widgets;
-    $hashRe = "/(?'pre'hash=)(?'hash'[^\"]+)/";
+    $hashRe = "/https:\/\/(?'region'[^\.]+).+(?'pre'hash=)(?'hash'[^\"]+)/";
     foreach ($widgets as $widget) {
         
         if ($widget->type !== 'Embed') {
@@ -64,8 +64,10 @@ function widgetoptions() : array {
         if (preg_match($hashRe, $widget->code->script, $matches) == 0) {
             continue;
         }
+
         $hash = $matches['hash'];
-        $options[$hash] = $name;
+        $region = $matches['region'];
+        $options[$region . '_' . $hash] = $name;
     }
     return $options;
 }
