@@ -19,7 +19,7 @@
  *
  * @package    block_libanswers
  * @author    Mark Sharp <m.sharp@chi.ac.uk>
- * @copyright 2020 University of Chichester {@link www.chi.ac.uk}
+ * @copyright 2020 University of Chichester {@link https://www.chi.ac.uk}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,7 +34,7 @@ class block_libanswers extends block_base {
     /**
      * Sets the title for the block.
      */
-    function init() {
+    public function init() {
         $this->title = get_string('pluginname', 'block_libanswers');
     }
 
@@ -42,14 +42,14 @@ class block_libanswers extends block_base {
     /**
      * Returns the content html for the block.
      */
-    function get_content() {
+    public function get_content() {
 
         if ($this->content !== null) {
             return $this->content;
         }
 
         $config = get_config('block_libanswers');
-        
+
         if (!isset($config->iid) || $config->iid == 0) {
             return $this->content;
         }
@@ -62,14 +62,14 @@ class block_libanswers extends block_base {
         $this->content->text = '';
 
         $now = time();
-        $day_name = date('l', $now);
+        $dayname = date('l', $now);
 
         // Week or weekend.
-        if ($day_name == 'Saturday' || $day_name == 'Sunday') {  // Weekend.
-            $start =  strtotime($this->config->start_time_w_end);
+        if ($dayname == 'Saturday' || $dayname == 'Sunday') {  // Weekend.
+            $start = strtotime($this->config->start_time_w_end);
             $end = strtotime($this->config->end_time_w_end);
         } else {   // Week days.
-            $start =  strtotime($this->config->start_time);
+            $start = strtotime($this->config->start_time);
             $end = strtotime($this->config->end_time);
         }
 
@@ -80,7 +80,7 @@ class block_libanswers extends block_base {
             }
             $region = $widget[0];
             $hash = $widget[1];
-            $this->content->text .=    '
+            $this->content->text .= '
             <div class="libchat-container">
                 <div id="libchat_' . $hash . '"></div>
                 <script src="https://' . $region . '.libanswers.com/load_chat.php?hash=' . $hash . '"></script>
@@ -90,7 +90,7 @@ class block_libanswers extends block_base {
             if ($config->hideinhours) {
                 $this->content = null;
             } else {
-                $this->content->text .=  get_string('serviceoffline', 'block_libanswers');
+                $this->content->text .= get_string('serviceoffline', 'block_libanswers');
             }
         }
 
@@ -114,11 +114,11 @@ class block_libanswers extends block_base {
         return true;
     }
 
-    function has_config() {
+    public function has_config() {
         return true;
     }
 
-    function user_can_edit() {
+    public function user_can_edit() {
         global $USER;
 
         if (!has_capability('block/libanswers:addinstance', $this->context)) {
@@ -131,9 +131,9 @@ class block_libanswers extends block_base {
 
         // The blocks in My Moodle are a special case.  We want them to inherit from the user context.
         if (!empty($USER->id)
-            && $this->instance->parentcontextid == $this->page->context->id   // Block belongs to this page
-            && $this->page->context->contextlevel == CONTEXT_USER             // Page belongs to a user
-            && $this->page->context->instanceid == $USER->id) {               // Page belongs to this user
+            && $this->instance->parentcontextid == $this->page->context->id   // Block belongs to this page.
+            && $this->page->context->contextlevel == CONTEXT_USER             // Page belongs to a user.
+            && $this->page->context->instanceid == $USER->id) {               // Page belongs to this user.
             return has_capability('moodle/my:manageblocks', $this->page->context);
         }
 
@@ -149,7 +149,7 @@ class block_libanswers extends block_base {
      * @param moodle_page $page
      * @return boolean
      */
-    function user_can_addto($page) {
+    public function user_can_addto($page) {
         global $USER;
 
         $canaddto = parent::user_can_addto($page);
@@ -163,5 +163,4 @@ class block_libanswers extends block_base {
         }
         return $canaddto;
     }
-
 }

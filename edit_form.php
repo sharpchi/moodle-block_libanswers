@@ -19,7 +19,7 @@
  *
  * @package   block_libanswers
  * @author    Mark Sharp <m.sharp@chi.ac.uk>
- * @copyright 2020 University of Chichester {@link www.chi.ac.uk}
+ * @copyright 2020 University of Chichester {@link https://www.chi.ac.uk}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,6 +32,12 @@ require_once($CFG->dirroot . '/blocks/libanswers/locallib.php');
  */
 class block_libanswers_edit_form extends block_edit_form {
 
+    /**
+     * Form definition for the instances.
+     *
+     * @param moodle_form $mform
+     * @return void
+     */
     protected function specific_definition($mform) {
 
         $widgetoptions = \block_libanswers\widgetoptions();
@@ -41,7 +47,7 @@ class block_libanswers_edit_form extends block_edit_form {
         } else {
             $mform->addElement('select', 'config_widgets', new lang_string('widgets', 'block_libanswers'), $widgetoptions);
         }
-        
+
         $mform->addElement('header', 'weekdays',  get_string('weekdays', 'block_libanswers'));
         $mform->setExpanded('weekdays');
 
@@ -67,6 +73,5 @@ class block_libanswers_edit_form extends block_edit_form {
         $mform->setDefault('config_end_time_w_end', '10:00:00');
         $mform->setType('config_end_time_w_end', PARAM_TEXT);
         $mform->addHelpButton('config_end_time_w_end', 'endtime', 'block_libanswers');
-
     }
 }

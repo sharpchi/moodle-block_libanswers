@@ -18,10 +18,10 @@
  * Locallib for LibAnswers
  *
  * @package    block_libanswers
- * @copyright  2020 University of Chichester {@link http://www.chi.ac.uk}
+ * @copyright  2020 University of Chichester {@link https://www.chi.ac.uk}
  * @author     Mark Sharp <m.sharp@chi.ac.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-*/
+ */
 
 namespace block_libanswers;
 
@@ -51,17 +51,17 @@ function widgetoptions() : array {
     require_once($CFG->libdir . '/filelib.php');
     $curl = new curl();
     $json = $curl->get($url . '/api/1.0/chat/widgets?iid=' . $iid);
-    
+
     $response = json_decode($json);
     $widgets = $response->widgets;
-    $hashRe = "/https:\/\/(?'region'[^\.]+).+(?'pre'hash=)(?'hash'[^\"]+)/";
+    $hashre = "/https:\/\/(?'region'[^\.]+).+(?'pre'hash=)(?'hash'[^\"]+)/";
     foreach ($widgets as $widget) {
-        
+
         if ($widget->type !== 'Embed') {
             continue;
         }
         $name = $widget->name;
-        if (preg_match($hashRe, $widget->code->script, $matches) == 0) {
+        if (preg_match($hashre, $widget->code->script, $matches) == 0) {
             continue;
         }
 
