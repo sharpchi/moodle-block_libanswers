@@ -110,14 +110,29 @@ class block_libanswers extends block_base {
                      'mod-quiz' => false);
     }
 
+    /**
+     * Allow multiple instances.
+     *
+     * @return boolean
+     */
     public function instance_allow_multiple() {
         return true;
     }
 
+    /**
+     * Has config.
+     *
+     * @return boolean
+     */
     public function has_config() {
         return true;
     }
 
+    /**
+     * User can edit instance.
+     *
+     * @return boolean
+     */
     public function user_can_edit() {
         global $USER;
 
