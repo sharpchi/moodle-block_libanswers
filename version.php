@@ -25,6 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020030600;
+$plugin->version   = 2020030601;
 $plugin->requires  = 2019111800;
 $plugin->component = 'block_libanswers';
